@@ -1,0 +1,37 @@
+namespace Hangman.Bll;
+
+
+public interface IWordSource
+{
+    string GetWord();
+    
+}
+
+
+public class ConsoleWordSource : IWordSource
+{
+    public string GetWord()
+    {
+        Console.Clear();
+        Console.Write("Enter the word to guess: ");
+        return Console.ReadLine();
+    }
+
+  
+}
+
+public class DictionaryWordSource(string filePath) : IWordSource
+{
+    public string[] words = File.ReadAllLines(filePath);
+
+    Random random = new Random();
+
+    public string GetWord()
+    {
+
+        int WordToGuess = random.Next(words.Length);
+        return words[WordToGuess];
+
+    }
+
+}
